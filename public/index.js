@@ -3,10 +3,11 @@
 const modeSwitchBtn = document.querySelector("#darkModeBtn");
 const progressBar = document.querySelector("#progressBar");
 const appNode = document.querySelector("#app");
+const html = document.body.parentElement;
 
-// Load UI mode
-const mode = localStorage.getItem("MODE");
-if (mode === "DARK") {
+const hours = new Date().getHours();
+const isDayTime = hours > 6 && hours < 20;
+if (!isDayTime) {
   html.classList.add("dark");
   modeSwitchBtn.textContent = "Light Mode";
 }
@@ -67,16 +68,3 @@ fetch("/api")
     });
   })
   .catch((err) => console.error(err));
-
-// Mode switch button
-modeSwitchBtn.addEventListener("click", (e) => {
-  if (e.target.textContent == "Dark Mode") {
-    document.body.parentElement.classList.add("dark");
-    e.target.textContent = "Light Mode";
-    localStorage.setItem("MODE", "DARK");
-  } else {
-    document.body.parentElement.classList.remove("dark");
-    e.target.textContent = "Dark Mode";
-    localStorage.clear("MODE");
-  }
-});
