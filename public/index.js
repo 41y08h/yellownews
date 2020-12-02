@@ -16,7 +16,7 @@ function Card(props) {
       <img src="${escapeHtml(props.urlToImage)}" alt="news image" />
       <div class="card-body">
         <h4 class="card-title">${escapeHtml(props.title)}</h4>
-        <h5 class="card-subtitle">${escapeHtml(props.author)} | ${new Date(props.publishDate).toLocaleDateString()}</h5>
+        <h5 class="card-subtitle">${escapeHtml(props.author)} | ${new Date(props.publishedAt).toLocaleDateString()}</h5>
         <p class="card-text">${escapeHtml(props.description)}</p>
         <a href="${escapeHtml(props.url)}" target="_blank">Read More</a>
       </div>
