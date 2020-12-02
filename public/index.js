@@ -1,10 +1,14 @@
 "use strict";
 
-const mode = localStorage.getItem("MODE");
+const modeSwitchBtn = document.querySelector("#darkModeBtn");
+const progressBar = document.querySelector("#progressBar");
+const appNode = document.querySelector("#app");
 
+// Load UI mode
+const mode = localStorage.getItem("MODE");
 if (mode === "DARK") {
-  document.body.parentElement.classList.add("dark");
-  document.querySelector("#darkModeBtn").textContent = "Light Mode";
+  html.classList.add("dark");
+  modeSwitchBtn.textContent = "Light Mode";
 }
 
 function escapeHtml(html) {
@@ -34,40 +38,38 @@ function Card(props) {
   return div;
 }
 
-const pb = document.querySelector("#progressBar");
 for (let i = 0; i < 23; i++) {
-  const pb = document.querySelector("#progressBar");
-  pb.classList.remove("w-" + (i - 1));
-  pb.classList.add("w-" + i);
-  pb.textContent = i + "%";
+  progressBar.classList.remove("w-" + (i - 1));
+  progressBar.classList.add("w-" + i);
+  progressBar.textContent = i + "%";
 }
 
 fetch("/api")
   .then((t) => t.json())
   .then((res) => {
     for (let i = 23; i <= 100; i++) {
-      const pb = document.querySelector("#progressBar");
-      pb.classList.remove("w-" + (i - 1));
-      pb.classList.add("w-" + i);
-      pb.textContent = i + "%";
+      progressBar.classList.remove("w-" + (i - 1));
+      progressBar.classList.add("w-" + i);
+      progressBar.textContent = i + "%";
 
       if (i === 100) {
         setTimeout(() => {
-          pb.parentElement.style.opacity = "0";
+          progressBar.parentElement.style.opacity = "0";
         }, 1000);
         setTimeout(() => {
-          pb.parentElement.remove();
+          progressBar.parentElement.remove();
         }, 2000);
       }
     }
 
     res.articles.forEach((article) => {
-      document.querySelector("#app").appendChild(Card(article));
+      appNode.appendChild(Card(article));
     });
   })
   .catch((err) => console.error(err));
 
-document.querySelector("#darkModeBtn").addEventListener("click", (e) => {
+// Mode switch button
+modeSwitchBtn.addEventListener("click", (e) => {
   if (e.target.textContent == "Dark Mode") {
     document.body.parentElement.classList.add("dark");
     e.target.textContent = "Light Mode";
@@ -75,6 +77,6 @@ document.querySelector("#darkModeBtn").addEventListener("click", (e) => {
   } else {
     document.body.parentElement.classList.remove("dark");
     e.target.textContent = "Dark Mode";
-    localStorage.setItem("MODE", "LIGHT");
+    localStorage.clear("MODE");
   }
 });
