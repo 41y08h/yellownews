@@ -59,3 +59,13 @@ fetch("/api")
     });
   })
   .catch((err) => console.error(err));
+
+document.querySelector("#darkModeBtn").addEventListener("click", (e) => {
+  if (e.target.textContent == "Dark Mode") {
+    document.body.parentElement.classList.add("dark");
+    e.target.textContent = "Light Mode";
+  } else {
+    document.body.parentElement.classList.remove("dark");
+    e.target.textContent = "Dark Mode";
+  }
+});
